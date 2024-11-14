@@ -56,6 +56,10 @@ docker compose -f docker-compose-clickhouse.yaml up -d
 Connect containers across regions:
 
 ```bash
+#Create the external network:
+docker network create --subnet=172.25.0.0/16 clickhouse_network_region_one
+docker network create --subnet=172.26.0.0/16 clickhouse_network_region_two
+
 # Connect region two containers to region one network
 docker network connect clickhouse_network_region_one clickhouse04-keeper
 docker network connect clickhouse_network_region_one clickhouse05-keeper
