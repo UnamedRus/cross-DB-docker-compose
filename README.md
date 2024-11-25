@@ -160,9 +160,7 @@ server.6=172.26.0.4:9234;participant;1
 ```
 
 
-#### 1. 
-
-Stop keeper ensemble in Region One:
+#### 1. Stop keeper ensemble in Region One:
 
 ```bash
 docker stop clickhouse01-keeper
