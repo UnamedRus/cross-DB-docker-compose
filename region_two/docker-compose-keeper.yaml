@@ -31,7 +31,8 @@ services:
       - "clickhouse05-server:172.26.0.13"
       - "clickhouse06-server:172.26.0.14"
     volumes:
-      - ./keeper_config/keeper_config_4.xml:/etc/clickhouse-keeper/keeper_config.xml
+      - ./keeper_config/keeper_config_4.xml:/etc/clickhouse-keeper/keeper_config.d/node_4.xml
+      - ./keeper_config/keeper_config_common.xml:/etc/clickhouse-keeper/keeper_config.xml
       - clickhouse04-keeper-data:/var/lib/clickhouse
       - clickhouse04-keeper-logs:/var/log/clickhouse-keeper
 
@@ -67,8 +68,8 @@ services:
       - "clickhouse05-server:172.26.0.13"
       - "clickhouse06-server:172.26.0.14"
     volumes:
-      - ./keeper_config/keeper_config_5.xml:/etc/clickhouse-keeper/keeper_config.xml
-      - ./keeper_config/listen_host.xml:/etc/clickhouse-server/config.d/listen_host.xml
+      - ./keeper_config/keeper_config_5.xml:/etc/clickhouse-keeper/keeper_config.d/node_5.xml
+      - ./keeper_config/keeper_config_common.xml:/etc/clickhouse-keeper/keeper_config.xml
       - clickhouse05-keeper-data:/var/lib/clickhouse
       - clickhouse05-keeper-logs:/var/log/clickhouse-keeper
 
@@ -104,8 +105,8 @@ services:
       - "clickhouse05-server:172.26.0.13"
       - "clickhouse06-server:172.26.0.14"
     volumes:
-      - ./keeper_config/keeper_config_6.xml:/etc/clickhouse-keeper/keeper_config.xml
-      - ./keeper_config/listen_host.xml:/etc/clickhouse-server/config.d/listen_host.xml
+      - ./keeper_config/keeper_config_6.xml:/etc/clickhouse-keeper/keeper_config.d/node_6.xml
+      - ./keeper_config/keeper_config_common.xml:/etc/clickhouse-keeper/keeper_config.xml
       - clickhouse06-keeper-data:/var/lib/clickhouse
       - clickhouse06-keeper-logs:/var/log/clickhouse-keeper
 

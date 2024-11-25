@@ -35,6 +35,7 @@ services:
       - ./config.xml:/etc/clickhouse-server/config.xml
       - ./clickhouse_config/clusters.xml:/etc/clickhouse-server/config.d/clusters.xml
       - ./clickhouse_config/zookeeper_config.xml:/etc/clickhouse-server/config.d/zookeeper_config.xml
+      - ./clickhouse_config/schema.xml:/etc/clickhouse-server/config.d/schema.xml
       - ./clickhouse_config/macros_1.xml:/etc/clickhouse-server/config.d/macros.xml
       - clickhouse01-server-data:/var/lib/clickhouse
 
@@ -73,6 +74,7 @@ services:
       - ./config.xml:/etc/clickhouse-server/config.xml
       - ./clickhouse_config/clusters.xml:/etc/clickhouse-server/config.d/clusters.xml
       - ./clickhouse_config/zookeeper_config.xml:/etc/clickhouse-server/config.d/zookeeper_config.xml
+      - ./clickhouse_config/schema.xml:/etc/clickhouse-server/config.d/schema.xml
       - ./clickhouse_config/macros_2.xml:/etc/clickhouse-server/config.d/macros.xml
       - clickhouse02-server-data:/var/lib/clickhouse
 
@@ -111,6 +113,7 @@ services:
       - ./config.xml:/etc/clickhouse-server/config.xml
       - ./clickhouse_config/clusters.xml:/etc/clickhouse-server/config.d/clusters.xml
       - ./clickhouse_config/zookeeper_config.xml:/etc/clickhouse-server/config.d/zookeeper_config.xml
+      - ./clickhouse_config/schema.xml:/etc/clickhouse-server/config.d/schema.xml
       - ./clickhouse_config/macros_3.xml:/etc/clickhouse-server/config.d/macros.xml
       - clickhouse03-server-data:/var/lib/clickhouse
 

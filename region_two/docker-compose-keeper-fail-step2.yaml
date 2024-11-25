@@ -1,11 +1,11 @@
 services:
-  clickhouse01:
-    image: clickhouse/clickhouse-server:latest
-    hostname: clickhouse04-server
-    container_name: clickhouse04-server
+  clickhouse04-keeper:
+    image: clickhouse/clickhouse-keeper:latest
+    hostname: clickhouse04-keeper
+    container_name: clickhouse04-keeper
     ports:
-      - 9011:9000
-      - 8131:8123
+      - 9184:9181  # Keeper port
+      - 9237:9234  # Keeper Raft port
     environment:
       - KEEPER_SERVER_ID=4
     ulimits:
@@ -15,7 +15,7 @@ services:
         hard: 262144
     networks:
       clickhouse_network_region_two:
-        ipv4_address: 172.26.0.12
+        ipv4_address: 172.26.0.2
     extra_hosts:
       - "clickhouse01-keeper:172.25.0.2"
       - "clickhouse02-keeper:172.25.0.3"
@@ -31,20 +31,18 @@ services:
       - "clickhouse05-server:172.26.0.13"
       - "clickhouse06-server:172.26.0.14"
     volumes:
-      - ./config.xml:/etc/clickhouse-server/config.xml
-      - ./clickhouse_config/clusters.xml:/etc/clickhouse-server/config.d/clusters.xml
-      - ./clickhouse_config/zookeeper_config.xml:/etc/clickhouse-server/config.d/zookeeper_config.xml
-      - ./clickhouse_config/schema.xml:/etc/clickhouse-server/config.d/schema.xml
-      - ./clickhouse_config/macros_1.xml:/etc/clickhouse-server/config.d/macros.xml
-      - clickhouse04-server-data:/var/lib/clickhouse
+      - ./keeper_config/keeper_config_4.xml:/etc/clickhouse-keeper/keeper_config.d/node_4.xml
+      - ./keeper_config/keeper_config_common.xml:/etc/clickhouse-keeper/keeper_config.xml
+      - clickhouse04-keeper-data:/var/lib/clickhouse
+      - clickhouse04-keeper-logs:/var/log/clickhouse-keeper
 
-  clickhouse02:
-    image: clickhouse/clickhouse-server:latest
-    hostname: clickhouse05-server
-    container_name: clickhouse05-server
+  clickhouse05-keeper:
+    image: clickhouse/clickhouse-keeper:latest
+    hostname: clickhouse05-keeper
+    container_name: clickhouse05-keeper
     ports:
-      - 9012:9000
-      - 8132:8123
+      - 9185:9181  # Keeper port
+      - 9238:9234  # Keeper Raft port
     environment:
       - KEEPER_SERVER_ID=5
     ulimits:
@@ -54,7 +52,7 @@ services:
         hard: 262144
     networks:
       clickhouse_network_region_two:
-        ipv4_address: 172.26.0.13
+        ipv4_address: 172.26.0.3
     extra_hosts:
       - "clickhouse01-keeper:172.25.0.2"
       - "clickhouse02-keeper:172.25.0.3"
@@ -70,20 +68,18 @@ services:
       - "clickhouse05-server:172.26.0.13"
       - "clickhouse06-server:172.26.0.14"
     volumes:
-      - ./config.xml:/etc/clickhouse-server/config.xml
-      - ./clickhouse_config/clusters.xml:/etc/clickhouse-server/config.d/clusters.xml
-      - ./clickhouse_config/zookeeper_config.xml:/etc/clickhouse-server/config.d/zookeeper_config.xml
-      - ./clickhouse_config/schema.xml:/etc/clickhouse-server/config.d/schema.xml
-      - ./clickhouse_config/macros_2.xml:/etc/clickhouse-server/config.d/macros.xml
-      - clickhouse05-server-data:/var/lib/clickhouse
+      - ./keeper_config/keeper_config_5.xml:/etc/clickhouse-keeper/keeper_config.d/node_5.xml
+      - ./keeper_config/keeper_config_common.xml:/etc/clickhouse-keeper/keeper_config.xml
+      - clickhouse05-keeper-data-fail:/var/lib/clickhouse
+      - clickhouse05-keeper-logs-fail:/var/log/clickhouse-keeper
 
-  clickhouse03:
-    image: clickhouse/clickhouse-server:latest
-    hostname: clickhouse06-server
-    container_name: clickhouse06-server
+  clickhouse06-keeper:
+    image: clickhouse/clickhouse-keeper:latest
+    hostname: clickhouse06-keeper
+    container_name: clickhouse06-keeper
     ports:
-      - 9013:9000
-      - 8133:8123
+      - 9186:9181  # Keeper port
+      - 9239:9234  # Keeper Raft port
     environment:
       - KEEPER_SERVER_ID=6
     ulimits:
@@ -93,7 +89,7 @@ services:
         hard: 262144
     networks:
       clickhouse_network_region_two:
-        ipv4_address: 172.26.0.14
+        ipv4_address: 172.26.0.4
     extra_hosts:
       - "clickhouse01-keeper:172.25.0.2"
       - "clickhouse02-keeper:172.25.0.3"
@@ -109,12 +105,10 @@ services:
       - "clickhouse05-server:172.26.0.13"
       - "clickhouse06-server:172.26.0.14"
     volumes:
-      - ./config.xml:/etc/clickhouse-server/config.xml
-      - ./clickhouse_config/clusters.xml:/etc/clickhouse-server/config.d/clusters.xml
-      - ./clickhouse_config/zookeeper_config.xml:/etc/clickhouse-server/config.d/zookeeper_config.xml
-      - ./clickhouse_config/schema.xml:/etc/clickhouse-server/config.d/schema.xml
-      - ./clickhouse_config/macros_3.xml:/etc/clickhouse-server/config.d/macros.xml
-      - clickhouse06-server-data:/var/lib/clickhouse
+      - ./keeper_config/keeper_config_6.xml:/etc/clickhouse-keeper/keeper_config.d/node_6.xml
+      - ./keeper_config/keeper_config_common.xml:/etc/clickhouse-keeper/keeper_config.xml
+      - clickhouse06-keeper-data-fail:/var/lib/clickhouse
+      - clickhouse06-keeper-logs-fail:/var/log/clickhouse-keeper
 
 networks:
   clickhouse_network_region_two:
@@ -127,6 +121,9 @@ networks:
     name: clickhouse_network_region_one
 
 volumes:
-  clickhouse04-server-data:
-  clickhouse05-server-data:
-  clickhouse06-server-data:
+  clickhouse04-keeper-data:
+  clickhouse05-keeper-data-fail:
+  clickhouse06-keeper-data-fail:
+  clickhouse04-keeper-logs:
+  clickhouse05-keeper-logs-fail:
+  clickhouse06-keeper-logs-fail:

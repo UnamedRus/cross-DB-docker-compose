@@ -1,0 +1,15 @@
+<clickhouse>
+    <default_replica_path>/clickhouse/tables/{shard}/{database}/{table}</default_replica_path>
+    <startup_scripts>
+        <scripts>
+            <query><![CDATA[
+CREATE TABLE IF NOT EXISTS track_status (
+number UInt32,
+timestamp MATERIALIZED now(),
+ingested_host MATERIALIZED hostName()
+) ENGINE = ReplicatedMergeTree
+ORDER BY (timestamp)
+            ]]></query>
+        </scripts>
+    </startup_scripts>
+</clickhouse>

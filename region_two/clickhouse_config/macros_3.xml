@@ -2,7 +2,7 @@
     <macros>
         <cluster>dr_cluster</cluster>
         <region>region_two</region>
-        <shard>1</shard>
+        <shard>3</shard>
         <replica>clickhouse06</replica>
     </macros>
 </clickhouse>
